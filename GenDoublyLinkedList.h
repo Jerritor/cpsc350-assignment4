@@ -1,30 +1,47 @@
 #pragma once
 #include <iostream>
-#include "GenLinkedList.h"
+#include "GenLinkedListInterface.h"
 
-//Uses DLLNode
+using namespace std;
+
+//====DLLNode DECLARATION====
 template <class T>
-class GenDoublyLinkedList : public GenLinkedList
+class DLLNode
+{
+	public:
+		DLLNode();
+		DLLNode(T d);
+		~DLLNode();
+
+		T data;
+		DLLNode<T> *next;
+		DLLNode<T> *prev;
+};
+
+
+//====GenDoublyLinkedList DECLARATION====
+template <class T>
+class GenDoublyLinkedList : public GenLinkedListInterface<T>
 {
   public:
     GenDoublyLinkedList();
     ~GenDoublyLinkedList();
-    void insertFront(T data);
-    void insertBack(T data); //queue insert()
-    void printList();
 
-    const T peek(); //queue front()/peek()
-    T removeFront(); //queue remove()
-    T removeBack();
-    T find(T value); //aka search() - returns index
-    int deletePosition(int position);
-    DLLNode<T> *remove(int key); //key = value to find
+	//overriding methods shared by ll & dll
+    void insertFront(T data); //derived method
+	T removeFront(); //derived method & queue remove()
+	int deletePosition(int position);
 
-    bool isEmpty() const; //queue isEmpty()
-    unsigned int getSize() const; //queue size()
+	//overriding methods by linked list
+	void printList();
+    const T peek();
+    int find(T data); //aka search(). returns index
+    bool isEmpty() const;
+    int getSize() const;
 
-	//virtual functions
-	//virtual
+	//new dll methods
+	void insertBack(T data); //queue insert()
+	T removeBack();
   private:
     DLLNode<T> *front;
     DLLNode<T> *back;
@@ -50,9 +67,6 @@ DLLNode<T>::DLLNode(T d)
 
 template <class T>
 DLLNode<T>::~DLLNode() {} //nothing to deallocate?
-
-template <class T>
-Node<T> DLLNode<T>::*getPrev() { return prev; }
 
 
 //===DLL IMPLEMENTATION===
@@ -86,43 +100,6 @@ void GenDoublyLinkedList<T>::insertFront(T data)
 }
 
 template <class T>
-void GenDoublyLinkedList<T>::insertBack(T data)
-{
-  DLLNode<T> *node = new DLLNode<T>(data); //create new node with data
-  if (size == 0)
-  {
-    front = node;
-  }
-  else
-  {
-    back -> next = node;
-    node -> prev = back;
-  }
-  back = node;  //the new node is now the front node
-  size++; //increase size
-}
-
-template <class T>
-void GenDoublyLinkedList<T>::printList()
-{
-  DLLNode<T> *current = front;
-  while (current->next != NULL) //this is a boolean check
-  {
-	cout << (current->next != NULL) << " ";
-    cout << current-> data << endl;
-    current = current -> next;
-  }
-  cout << (current->next != NULL) << " ";
-  cout << current-> data << endl;
-}
-
-template <class T>
-const T GenDoublyLinkedList<T>::peek()
-{
-  return front -> data;
-}
-
-template <class T>
 T GenDoublyLinkedList<T>::removeFront()
 {
   T temp = front->data;	//temp = current/front node's data
@@ -137,40 +114,6 @@ T GenDoublyLinkedList<T>::removeFront()
   delete ft;			//delete ft, it's been allocated
   size--;			//decrease linkedlist size
   return temp;			//return front.data
-}
-
-template <class T>
-T GenDoublyLinkedList<T>::removeBack()
-{
-  T temp = back->data;
-  DLLNode<T> *bk = back;
-
-  back = back->prev;
-
-  back->next = NULL;	//deallocating back.next
-  bk->next = NULL;	//deallocating bk.next
-  bk->prev = NULL;	//deallocating bk.prev
-
-  delete bk;
-  size--;
-  return temp;
-}
-
-template <class T>
-T GenDoublyLinkedList<T>::find(T value)
-{
-  int index = -1;
-  DLLNode<T> *current = front; //current = front node
-
-  while(current != NULL)
-  {
-    ++index; //increase index
-    if(current->data == value) //if current.data = value
-      return index;
-    else
-      current = current->next;	//set current = next node
-  }
-  return -1;
 }
 
 template <class T>
@@ -211,28 +154,40 @@ int GenDoublyLinkedList<T>::deletePosition(int position) //assuming the list exi
 }
 
 template <class T>
-DLLNode<T>* GenDoublyLinkedList<T>::remove(int key)
+void GenDoublyLinkedList<T>::printList()
 {
-	DLLNode<T> *curr = front;
-	while (curr->data != key)
-	{
-		curr = curr->next;
-		if (!curr) return NULL;
-	}
-	if (curr == front)
-		front = curr->next;
-	else
-		curr->prev->next = curr->next;
-	if (curr == back)
-        	back = curr->next;
-	else
-		curr->next->prev = curr->prev;
+  DLLNode<T> *current = front;
+  while (current->next != NULL)
+  {
+	cout << (current->next != NULL) << " "; //adds a space between elems
+    cout << current-> data << endl;
+    current = current -> next;
+  }
+  cout << (current->next != NULL) << " ";
+  cout << current-> data << endl;
+}
 
-	curr->next = NULL;
-	curr->prev = NULL;
-	size--;
-	return curr; //returns curr w/o prev & next pointers
-	//curr doesn't actually get deallocated here
+template <class T>
+const T GenDoublyLinkedList<T>::peek()
+{
+  return front -> data;
+}
+
+template <class T>
+int GenDoublyLinkedList<T>::find(T value) //returns pos
+{
+  int index = -1;
+  DLLNode<T> *current = front; //current = front node
+
+  while(current != NULL)
+  {
+    ++index; //increase index
+    if(current->data == value) //if current.data = value
+      return index;
+    else
+      current = current->next;	//set current = next node
+  }
+  return -1;
 }
 
 template <class T>
@@ -242,7 +197,43 @@ bool GenDoublyLinkedList<T>::isEmpty() const
 }
 
 template <class T>
-unsigned int GenDoublyLinkedList<T>::getSize() const
+int GenDoublyLinkedList<T>::getSize() const
 {
   return size;
+}
+
+template <class T>
+void GenDoublyLinkedList<T>::insertBack(T data)
+{
+  DLLNode<T> *node = new DLLNode<T>(data); //create new node with data
+  if (size == 0)
+  {
+    front = node;
+  }
+  else
+  {
+    back -> next = node;
+    node -> prev = back;
+  }
+  back = node;  //the new node is now the front node
+  size++; //increase size
+}
+
+
+
+template <class T>
+T GenDoublyLinkedList<T>::removeBack()
+{
+  T temp = back->data;
+  DLLNode<T> *bk = back;
+
+  back = back->prev;
+
+  back->next = NULL;	//deallocating back.next
+  bk->next = NULL;	//deallocating bk.next
+  bk->prev = NULL;	//deallocating bk.prev
+
+  delete bk;
+  size--;
+  return temp;
 }
