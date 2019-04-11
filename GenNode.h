@@ -5,26 +5,27 @@ template <class T> //Template Class Declaration
 class GenNode //Generic Node class
 {
   public:
-    ListNode();
-    ListNode(T data);
-    ~ListNode();
+    GenNode();
+    GenNode(T data);
+    ~GenNode();
     T data; //data of this node
-    ListNode *next; //pointer to next node
+    GenNode<T> *next; //pointer to next node
 };
 
 //===Node Implementation===
 
 template <class T>
-inline ListNode::ListNode()
+GenNode<T>::GenNode()
 {
   next = NULL;
 }
 
-
-inline ListNode::ListNode(T d)
+template <class T>
+GenNode<T>::GenNode(T d)
 {
   data = d;
   next = NULL;
 }
 
-inline ListNode::~ListNode() {} //nothing to deallocate?
+template <class T>
+GenNode<T>::~GenNode() {} //nothing to deallocate?

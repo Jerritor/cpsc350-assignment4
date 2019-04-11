@@ -6,16 +6,16 @@ using namespace std;
 
 //====DECLARATION====
 template <class T>
-class NaiveList //Linked List class
+class GenLinkedList //Linked List base class
 {
   public:
-    NaiveList();
-    ~NaiveList();
-    void insertFront(T data);
-    void printList();
-
+    GenLinkedList();
+    ~GenLinkedList();
+    virtual void insertFront(T data);
+	virtual int removeFront();
+	
+	void printList();
     const int peek() const;
-    int removeFront();
     int find(T data); //aka search(). returns index
     int deletePosition(int position);
 
@@ -27,25 +27,24 @@ class NaiveList //Linked List class
     unsigned int size;
 };
 
-
 //====IMPLEMENTATION=========
 template <class T>
-NaiveList::NaiveList() //blank linkedlist
+GenLinkedList::GenLinkedList() //blank linkedlist
 {
   size = 0;
   front = NULL;
 }
 
 template <class T>
-NaiveList::~NaiveList()
+GenLinkedList::~GenLinkedList()
 {
   while (!isEmpty()) removeFront();
 }
 
 template <class T>
-void NaiveList::insertFront(T data)
+void GenLinkedList::insertFront(T data)
 {
-  ListNode *node = new ListNode; //create new node with data
+  GenNode *node = new GenNode; //create new node with data
   node -> data = data;
   if (size == 0)
     front = node;
@@ -59,9 +58,9 @@ void NaiveList::insertFront(T data)
 }
 
 template <class T>
-void NaiveList::printList()
+void GenLinkedList::printList()
 {
-  ListNode *current = front;
+  GenNode *current = front;
   while (current) //this is a boolean check -- if not null
   {
     cout << current -> data << endl;
@@ -70,16 +69,16 @@ void NaiveList::printList()
 }
 
 template <class T>
-const T NaiveList::peek() const
+const T GenLinkedList::peek() const
 {
   return front -> data;
 }
 
 template <class T>
-T NaiveList::removeFront()
+T GenLinkedList::removeFront()
 {
   int temp = front->data;	//temp = current/front node's data
-  ListNode *old = front;	//save current node. (old->data should be saved?)
+  GenNode *old = front;	//save current node. (old->data should be saved?)
 
   front = front->next;		//change front pointer to next node
 
@@ -91,10 +90,10 @@ T NaiveList::removeFront()
 }
 
 template <class T>
-int NaiveList::find(T value)
+int GenLinkedList::find(T value)
 {
   int index = -1; //front is index = 0
-  ListNode *current = front; //current = front node
+  GenNode *current = front; //current = front node
 
   while(current != NULL) //if current == NULL, index = -1
   {
@@ -108,7 +107,7 @@ int NaiveList::find(T value)
 }
 
 template <class T>
-int NaiveList::deletePosition(int position) //returns the deleted data
+int GenLinkedList::deletePosition(int position) //returns the deleted data
 {
   //if position is within size boundaries and list exists
   if (position >= getSize() || position < 0 || isEmpty())
@@ -118,24 +117,14 @@ int NaiveList::deletePosition(int position) //returns the deleted data
   int index = 0; //prev's index is -1, current is 0
 
   //checks to make sure there's at least one node
-  ListNode *previous = front; //previous node = front node
-  ListNode *current = front; //current node = front node
+  GenNode *previous = front; //previous node = front node
+  GenNode *current = front; //current node = front node
 
   for(int i = 0; i < position; i++)
   {
     previous = current; //stay back?
     current = current->next; //current node = next node;
   }
-
-  /**
-  while (index != position)
-  {
-    previous = current; //stay back?
-    current = current->next; //current node = next node;
-    index++; //increment index
-  }**/
-
-  //when we find the correct position, update pointers
 
   previous->next = current->next;	//prev's next pointer point's at current's next pointer. skips current
   //if postion = 0, this means nothing
@@ -149,13 +138,13 @@ int NaiveList::deletePosition(int position) //returns the deleted data
 }
 
 template <class T>
-bool NaiveList::isEmpty() const
+bool GenLinkedList::isEmpty() const
 {
   return front == NULL;
 }
 
 template <class T>
-unsigned int NaiveList::getSize() const
+unsigned int GenLinkedList::getSize() const
 {
   return size;
 }
