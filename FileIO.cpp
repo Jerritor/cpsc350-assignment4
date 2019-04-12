@@ -1,4 +1,3 @@
-#pragma once
 #include <iostream>
 #include <fstream>
 #include "FileIO.h"
@@ -9,7 +8,7 @@ using namespace std;
 FileIO::FileIO(string f)
 {
 	cout << readFile(f) << endl;
-	printQueues();
+	//printQueues();
 }
 
 FileIO::~FileIO() {}
@@ -79,5 +78,16 @@ void FileIO::printQueues()
 	while (!idDeque.isEmpty() || !enterDeque.isEmpty() || !windowDeque.isEmpty())
 	{
 		cout << idDeque.dequeue() << ": enter=" << enterDeque.dequeue() << " window=" << windowDeque.dequeue() << endl;
+	}
+}
+
+void FileIO::transferQueues(RegistrarDeque &id, RegistrarDeque &enter, RegistrarDeque &win, int &numWins)
+{
+	numWins = windows;
+	while (!idDeque.isEmpty() || !enterDeque.isEmpty() || !windowDeque.isEmpty())
+	{
+		id.enqueue(idDeque.dequeue());
+		enter.enqueue(enterDeque.dequeue());
+		win.enqueue(windowDeque.dequeue());
 	}
 }

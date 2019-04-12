@@ -1,7 +1,8 @@
 #include <iostream>
 //#include "GenDoublyLinkedList.h"
 //#include "RegistrarDeque.h"
-#include "FileIO.h"
+//#include "FileIO.h"
+#include "Simulation.h"
 using namespace std;
 
 //void testDLL();
@@ -9,9 +10,17 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+	if (argc == 2)
+	{
+		cout << "=Assignment4 Initialized=" << endl;
+		string textfile = argv[1];
+		Simulation sim(textfile);
+	}
+	else
+		cout << "Enter the file to be read as an argument." << endl;
 	//testDeque();
 	//testDLL();
-	FileIO io("readfile2.txt");
+	//FileIO io("readfile2.txt");
 
 	cout << "Program exited successfully." << endl;
 	return 0;

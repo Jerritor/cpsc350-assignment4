@@ -16,6 +16,7 @@ class FileIO
 		~FileIO();
 		bool readFile(string f);
 		void printQueues();
+		void transferQueues(RegistrarDeque &id, RegistrarDeque &enter, RegistrarDeque &win, int &numWins);
 
 		//enter queue <int> holds times to let students go
 		//id queue <int> holds the id's to be released into queue (in order)
