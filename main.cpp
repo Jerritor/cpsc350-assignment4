@@ -1,20 +1,23 @@
 #include <iostream>
-#include "GenDoublyLinkedList.h"
-#include "RegistrarDeque.h"
+//#include "GenDoublyLinkedList.h"
+//#include "RegistrarDeque.h"
+#include "FileIO.h"
 using namespace std;
 
-void testDLL();
-void testDeque();
+//void testDLL();
+//void testDeque();
 
 int main(int argc, char** argv)
 {
-	testDeque();
+	//testDeque();
 	//testDLL();
+	FileIO io("readfile2.txt");
 
 	cout << "Program exited successfully." << endl;
 	return 0;
 }
 
+/**
 void testDeque()
 {
 	RegistrarDeque dll;
@@ -74,3 +77,4 @@ void testDLL()
 		cout << "Removing Front: " << dll.removeFront() << endl;
 	cout << "Queue empty." << endl;
 }
+**/
