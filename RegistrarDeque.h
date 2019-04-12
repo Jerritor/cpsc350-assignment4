@@ -12,7 +12,7 @@ class RegistrarDeque
 	~RegistrarDeque(); //base destructor
 
     void enqueue(Student s); //insertFront()
-	Student dequeue(); //removeFront()
+	int dequeue(); //removeFront() - returns wait time
 	const Student front(); //peek()
 	int find(Student s); //find()
 	int getSize(); //getSize()
