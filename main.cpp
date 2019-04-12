@@ -1,5 +1,6 @@
 #include <iostream>
-#include "GenDoublyLinkedList.h"
+//#include "GenDoublyLinkedList.h"
+#include "RegistrarDeque.h"
 using namespace std;
 
 void testDLL();
