@@ -105,9 +105,13 @@ T GenDoublyLinkedList<T>::removeFront()
   T temp = front->data;	//temp = current/front node's data
   DLLNode<T> *ft = front;		//save head
 
-  front = front->next;		//change front to next node
+  if (getSize() > 1)
+  {
+	  front = front->next;		//change front to next node
+	  front->prev = NULL;
+  }
+  else front = NULL;
 
-  front-> prev = NULL;
   ft->prev = NULL;
   ft->next = NULL;		//set ft.next to not point to anything
 
@@ -159,11 +163,11 @@ void GenDoublyLinkedList<T>::printList()
   DLLNode<T> *current = front;
   while (current->next != NULL)
   {
-	cout << (current->next != NULL) << " "; //adds a space between elems
+	//cout << (current->next != NULL) << " "; //returns if current.next exists
     cout << current-> data << endl;
     current = current -> next;
   }
-  cout << (current->next != NULL) << " ";
+  //cout << (current->next != NULL) << " ";
   cout << current-> data << endl;
 }
 
@@ -207,9 +211,7 @@ void GenDoublyLinkedList<T>::insertBack(T data)
 {
   DLLNode<T> *node = new DLLNode<T>(data); //create new node with data
   if (size == 0)
-  {
     front = node;
-  }
   else
   {
     back -> next = node;
@@ -227,9 +229,13 @@ T GenDoublyLinkedList<T>::removeBack()
   T temp = back->data;
   DLLNode<T> *bk = back;
 
-  back = back->prev;
+  if (getSize() > 1)
+  {
+	  back = back->prev;
+	  back->next = NULL;	//deallocating back.next
+  }
+  else back = NULL;
 
-  back->next = NULL;	//deallocating back.next
   bk->next = NULL;	//deallocating bk.next
   bk->prev = NULL;	//deallocating bk.prev
 
