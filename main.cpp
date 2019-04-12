@@ -1,15 +1,47 @@
 #include <iostream>
 #include "GenDoublyLinkedList.h"
+#include "RegistrarDeque.h"
 using namespace std;
 
 void testDLL();
+void testDeque();
 
 int main(int argc, char** argv)
 {
+	testDeque();
 	//testDLL();
 
 	cout << "Program exited successfully." << endl;
 	return 0;
+}
+
+void testDeque()
+{
+	RegistrarDeque dll;
+
+	dll.enqueue(3); //3
+	dll.enqueue(4); //3 4
+	dll.enqueue(2); //3 4 2
+	dll.enqueue(5); //3 4 2 5
+	dll.enqueue(1); //3 4 2 5 1
+
+	cout << "Printing List" << endl;
+	dll.printQueue(); //3 4 2 5 1
+
+	cout << "Dequeing: " << dll.dequeue() << endl; //r: 4 2 5 1
+	cout << "Peeking: " << dll.peek() << endl; //4
+	cout << "Dequeing: " << dll.dequeue() << endl; //r: 2 5 1
+
+	cout << "Peeking: " << dll.peek() << endl; //2
+
+	cout << "Printing Remaining" << endl; //2 5 1
+	dll.printQueue();
+	cout << "Dequeing: " << dll.dequeue() << endl; //r: 5 1
+
+	cout << "Emptying the queue..." << endl;
+	while (!dll.isEmpty())
+		cout << "Removing Front: " << dll.dequeue() << endl;
+	cout << "Queue empty." << endl;
 }
 
 void testDLL()
