@@ -13,9 +13,11 @@ class Simulation
 		RegistrarDeque ids;
 		RegistrarDeque enterTimes;
 		RegistrarDeque windowTimes;
+
+		RegistrarDeque waitLine;
 		int clock = 0;
 		int windows;
-		Windows *wins;
+		Window *wins;
 
 		Simulation(string f);
 		~Simulation();

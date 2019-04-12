@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Window::Window()
+Window::Window() {}
 
 Window::~Window() {}
 
@@ -19,5 +19,9 @@ int Window::vacate()
 	id = 0;
 	return tmp;
 }
+
+void Window::setId(int i) { id = i; }
+
+int Window::getId() { return id; }
 
 bool Window::isOccupied() { return (id == 0); }

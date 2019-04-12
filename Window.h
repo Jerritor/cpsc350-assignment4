@@ -15,5 +15,7 @@ class Window
 
 		void occupy(int i);
 		int vacate();
+		void setId(int i);
+		int getId();
 		bool isOccupied();
 };
