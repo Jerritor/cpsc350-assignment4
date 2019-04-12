@@ -6,13 +6,12 @@ using namespace std;
 class DequeNode
 {
 	public:
-		DequeNode(int w);
+		DequeNode();
+		DequeNode(int d);
 		~DequeNode();
 
-		int waittime = 0;
-
-		bool isInQueue();
-		void incWait();
+		int data;
+		void incData(); //increase data by 1
 
 		DequeNode *next;
 		DequeNode *prev;

@@ -6,6 +6,14 @@ using namespace std;
 
 DequeNode::DequeNode()
 {
+	data = 0;
+	next = nullptr;
+	prev = nullptr;
+}
+
+DequeNode::DequeNode(int d)
+{
+	data = d;
 	next = nullptr;
 	prev = nullptr;
 }
@@ -38,12 +46,11 @@ void RegistrarDeque::enqueue(int w) //insertback()
     }
     back = node;  //the new node is now the front node
     size++; //increase size
-	node->waittime++; //set waittime to 0
 }
 
 int RegistrarDeque::dequeue()
 {
-	int temp = front->waittime;	//temp = current/front node's data
+	int temp = front->data;	//temp = current/front node's data
     DequeNode *ft = front;		//save head
 
     if (getSize() > 1)
@@ -63,7 +70,7 @@ int RegistrarDeque::dequeue()
 
 int RegistrarDeque::peek()
 {
-	return front->waittime;
+	return front->data;
 }
 
 int RegistrarDeque::getSize()
@@ -82,9 +89,9 @@ void RegistrarDeque::printQueue()
     while (current->next != NULL)
     {
   	//cout << (current->next != NULL) << " "; //returns if current.next exists
-      cout << current-> waittime << endl;
+      cout << current-> data << endl;
       current = current -> next;
     }
     //cout << (current->next != NULL) << " ";
-    cout << current-> waittime << endl;
+    cout << current-> data << endl;
 }
